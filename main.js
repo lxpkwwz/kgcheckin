@@ -45,7 +45,7 @@ async function main() {
       printMagenta(`账号 ${userDetail?.data?.nickname} 开始领取VIP...`)
 
       // 周日刷新token
-      if (new Date().getDay() == 0) {
+      if (today.getDay() == 0) {
         const refreshToken = await send(`/login/token?timestrap=${Date.now()}`, "POST", headers)
         if (refreshToken?.status == 1) {
           if (refreshToken?.data?.token !== user.token) {
