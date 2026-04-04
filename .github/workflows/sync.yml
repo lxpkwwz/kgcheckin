@@ -1,0 +1,21 @@
+name: '自动同步上游仓库'
+on:
+  schedule:
+    - cron: '0 7 * * 2,5' # 每周一和周四的7点自动触发
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  sync-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出目标仓库
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: 同步上游变更
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
+        with:
+          target_sync_branch: 'main' # 你的分支名
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          upstream_sync_repo: 'develop202/kgcheckin' # 上游仓库地址
+          upstream_sync_branch: 'main' # 上游基准分支
