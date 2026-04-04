@@ -19,3 +19,12 @@ jobs:
           target_repo_token: ${{ secrets.GITHUB_TOKEN }}
           upstream_sync_repo: 'develop202/kgcheckin' # 上游仓库地址
           upstream_sync_branch: 'main' # 上游基准分支
+          
+           # 步骤 3 (可选): 输出同步结果
+      - name: 有新提交时输出提示
+        if: steps.sync.outputs.has_new_commits == 'true'
+        run: echo "已同步新的提交。"
+
+      - name: 无新提交时输出提示
+        if: steps.sync.outputs.has_new_commits == 'false'
+        run: echo "当前分支已是最新。"
